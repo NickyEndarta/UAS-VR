@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>Wisata Candi Virtual Reality Tour</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="./js/aframe/aframe-event-set-component.min.js"></script>
+    <script src="./js/aframe/aframe-layout-component.min.js"></script>
+    <script src="./js/aframe/aframe-template-component.min.js"></script>
+    <script src="./js/aframe/aframe-proxy-event-component.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <a-assets>
+            <audio id="click-sound" crossorigin="anonymous" src="./audio/click.mp3"></audio>
+            <img id="ijo-01" crossorigin="anonymous" src="./assets/ijo 1.png">
+            <img id="ijo-02" crossorigin="anonymous" src="./assets/ijo 2.png">
+            <img id="ijo-03" crossorigin="anonymous" src="./assets/ijo 3.png">
+            <img id="ijo-04" crossorigin="anonymous" src="./assets/ijo 4.png">
+            <img id="ijo-05" crossorigin="anonymous" src="./assets/ijo 5.png">
+            <img id="kedulan-01" crossorigin="anonymous" src="./assets/kedulan 1.png">
+            <img id="kedulan-02" crossorigin="anonymous" src="./assets/kedulan 2.png">
+            <img id="kedulan-03" crossorigin="anonymous" src="./assets/kedulan 3.png">
+            <img id="kedulan-04" crossorigin="anonymous" src="./assets/kedulan 4.png">
+            <img id="kedulan-05" crossorigin="anonymous" src="./assets/kedulan 5.png">
+            <img id="prambanan-01" crossorigin="anonymous" src="./assets/prambanan 1.png">
+            <img id="prambanan-02" crossorigin="anonymous" src="./assets/prambanan 2.png">
+            <img id="prambanan-03" crossorigin="anonymous" src="./assets/prambanan 3.png">
+            <img id="prambanan-04" crossorigin="anonymous" src="./assets/prambanan 4.png">
+            <img id="prambanan-05" crossorigin="anonymous" src="./assets/prambanan 5.png">
+            <img id="sewu-01" crossorigin="anonymous" src="./assets/sewu 1.png">
+            <img id="sewu-02" crossorigin="anonymous" src="./assets/sewu 2.png">
+            <img id="sewu-03" crossorigin="anonymous" src="./assets/sewu 3.png">
+            <img id="sewu-04" crossorigin="anonymous" src="./assets/sewu 4.png">
+            <img id="sewu-05" crossorigin="anonymous" src="./assets/sewu 5.png">
+
+
+            <!-- Image link template to be reused. -->
+            <script id="link" type="text/html">
+                <a-entity class="link" geometry="primitive: sphere; radius: 0.5; rotation: 90 0 90"
+                    material="shader: flat; src: ${thumb}" event-set__mouseenter="scale: 1.2 1.2 1"
+                    event-set__mouseleave="scale: 1 1 1"
+                    event-set__click="_target: #image-360; _delay: 300; material.src: ${src}"
+                    proxy-event="event: click; to: #image-360; as: fade" sound="on: click; src: #click-sound">
+                </a-entity>
+            </script>
+        </a-assets>
+
+        <!-- Camera + cursor. -->
+        <a-entity id="camera" camera look-controls>
+            <a-cursor id="cursor" position="0 0 -1" geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02;"
+                material="color: black; shader: flat" cursor="maxDistance: 30; fuse: true"
+                animation__click="property: scale; from: 0.5 0.5 0.5; to: 1 1 1;startEvents: click; dur: 150;easing:easeInQuad;"
+                animation__fusing="property: scale; from: 1 1 1; to: 0.5 0.5 0.5;startEvents: fusing; dur: 1000;easing:easeInQuad;"
+                event-set__mouseenter="_event: mouseenter; color: springgreen"
+                event-set__mouseleave="_event: mouseleave; color: black" raycaster="objects: .link"></a-cursor>
+        </a-entity>
+        <!-- 360-degree image. -->
+        <a-sky id="image-360" radius="10" src="#prambanan-01"
+            animation__fade="property: components.material.material.color; type: color; from: #FFF; to: #000; dur: 300; startEvents: fade"
+            animation__fadeback="property: components.material.material.color; type: color; from: #000; to: #FFF; dur: 300; startEvents: animationcomplete__fade">
+        </a-sky>
+
+        <!-- Image links. -->
+        <a-text value="Candi Ijo" position="-5 -4 0.5" rotation="0 90 0"></a-text>
+        <a-entity id="links1" layout="type: line; margin: 1.5" position="-5 -3 1.5" rotation="-90 90 0">
+            <a-entity template="src: #link" data-src="#ijo-01" data-thumb="#ijo-01"></a-entity>
+            <a-entity template="src: #link" data-src="#ijo-02" data-thumb="#ijo-02"></a-entity>
+            <a-entity template="src: #link" data-src="#ijo-03" data-thumb="#ijo-03"></a-entity>
+            <a-entity template="src: #link" data-src="#ijo-04" data-thumb="#ijo-04"></a-entity>
+            <a-entity template="src: #link" data-src="#ijo-05" data-thumb="#ijo-05"></a-entity>
+        </a-entity>
+        <a-text value="Candi Kedulan" position="0 -4 -5" rotation="0 0 0"></a-text>
+        <a-entity id="links2" layout="type: line; margin: 1.5" position="-2 -3 -5" rotation="-90 0 0">
+            <a-entity template="src: #link" data-src="#kedulan-01" data-thumb="#kedulan-01"></a-entity>
+            <a-entity template="src: #link" data-src="#kedulan-02" data-thumb="#kedulan-02"></a-entity>
+            <a-entity template="src: #link" data-src="#kedulan-03" data-thumb="#kedulan-03"></a-entity>
+            <a-entity template="src: #link" data-src="#kedulan-04" data-thumb="#kedulan-04"></a-entity>
+            <a-entity template="src: #link" data-src="#kedulan-05" data-thumb="#kedulan-05"></a-entity>
+        </a-entity>
+        <a-text value="Candi Prambanan" position="5 -4 -0.5" rotation="0 -90 0"></a-text>
+        <a-entity id="links3" layout="type: line; margin: 1.5" position="5 -3 -1.5" rotation="-90 -90 0">
+            <a-entity template="src: #link" data-src="#prambanan-01" data-thumb="#prambanan-01"></a-entity>
+            <a-entity template="src: #link" data-src="#prambanan-02" data-thumb="#prambanan-02"></a-entity>
+            <a-entity template="src: #link" data-src="#prambanan-03" data-thumb="#prambanan-03"></a-entity>
+            <a-entity template="src: #link" data-src="#prambanan-04" data-thumb="#prambanan-04"></a-entity>
+            <a-entity template="src: #link" data-src="#prambanan-05" data-thumb="#prambanan-05"></a-entity>
+        </a-entity>
+        <a-text value="Candi Sewu" position="0 -1 5" rotation="0 180 0"></a-text>
+        <a-entity id="links4" layout="type: line; margin: 1.5" position="0 0 5" rotation="-90 180 0">
+            <a-entity template="src: #link" data-src="#sewu-01" data-thumb="#sewu-01"></a-entity>
+            <a-entity template="src: #link" data-src="#sewu-02" data-thumb="#sewu-02"></a-entity>
+            <a-entity template="src: #link" data-src="#sewu-03" data-thumb="#sewu-03"></a-entity>
+            <a-entity template="src: #link" data-src="#sewu-04" data-thumb="#sewu-04"></a-entity>
+            <a-entity template="src: #link" data-src="#sewu-05" data-thumb="#sewu-05"></a-entity>
+        </a-entity>
+
+        <a-sound src="#click-sound" autoplay="true" loop="false" position="0 2 -5"></a-sound>
+    </a-scene>
+</body>
+
+</html>
